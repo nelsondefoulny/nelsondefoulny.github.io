@@ -1,0 +1,33 @@
+.tiles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0rem;
+}
+
+.tiles a {
+  display: block;
+  flex: 1 1 250px;
+  max-width: 256px;
+  padding: 1em 1em 0em 1em;
+  margin: 0em;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.075);
+  transition: all 0.2s ease-in-out;
+  line-height: 1.3;
+}
+
+.tiles a:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.tiles img {
+  width: 256px;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}

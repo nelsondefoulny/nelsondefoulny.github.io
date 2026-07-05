@@ -1,0 +1,85 @@
+/* ──────────────────────────────── */
+/* Light Mode (default scheme)     */
+/* ──────────────────────────────── */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #1E90FF;   /* Unreal blue */
+  --md-accent-fg-color: #00C0FF;    /* Accent cyan */
+  --heading-color-1: #1E90FF;
+  --heading-color-2: #007ACC;
+  --heading-color-3: #004e81;
+  --heading-color-4: #121212;
+  --text-color: #121212;
+  --bg-color: #ffffff;
+}
+
+/* ──────────────────────────────── */
+/* Dark Mode (slate scheme)        */
+/* ──────────────────────────────── */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #1E90FF;
+  --md-accent-fg-color: #00C0FF;
+  --md-default-bg-color: #121212;
+  --heading-color-1: #1E90FF;
+  --heading-color-2: #00C0FF;
+  --heading-color-3: #E5E5E5;
+  --heading-color-4: #CCCCCC;
+  --text-color: #CCCCCC;
+}
+
+/* ──────────────────────────────── */
+/* Shared heading styling          */
+/* ──────────────────────────────── */
+.md-typeset h1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  color: var(--heading-color-1);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.md-typeset h2 {
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--heading-color-2);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.md-typeset h3 {
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--heading-color-3);
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.md-typeset h4 {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--heading-color-4);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Optional: Set body text color */
+.md-typeset {
+  color: var(--text-color);
+}
+
+/* [data-md-color-scheme="slate"] {
+  --md-hue: 209; 
+} */
+
+
+
+/* .startup-info {
+  background-color: #f9f9f9;
+  border-left: 4px solid #5c5c5c;
+  padding: 1em;
+  margin-bottom: 2em;
+}
+.startup-info code {
+  background: #e0e0e0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+} */

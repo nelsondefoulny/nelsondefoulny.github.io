@@ -1,0 +1,1896 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Modeling tool that generate wireframe version of a given mesh">
+      
+      
+        <meta name="author" content="Nelson Defoulny">
+      
+      
+        <link rel="canonical" href="https://nelsondefoulny.github.io/posts/personal_projects/wire_mesh_tool/">
+      
+      
+        <link rel="prev" href="../../professional_projects/mz_kalulu/">
+      
+      
+        <link rel="next" href="../../lessons/raymarching_introduction/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>UE5 Wire Mesh Tool Plugin - Nelson Defoulny</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../styles/extra.css">
+    
+      <link rel="stylesheet" href="../../../styles/footer.css">
+    
+      <link rel="stylesheet" href="../../../styles/post_header.css">
+    
+      <link rel="stylesheet" href="../../../styles/tiles.css">
+    
+      <link rel="stylesheet" href="../../../styles/print.css">
+    
+      <link rel="stylesheet" href="https://unpkg.com/katex@0/dist/katex.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#description" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+<span style="color: white;"><strong>⚠️ This site is currently under construction ! ⚠️</strong></span>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Nelson Defoulny" class="md-header__button md-logo" aria-label="Nelson Defoulny" data-md-component="logo">
+      
+  <img src="../../../assets/nd_white_alpha.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Nelson Defoulny
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              UE5 Wire Mesh Tool Plugin
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Nelson Defoulny" class="md-nav__button md-logo" aria-label="Nelson Defoulny" data-md-component="logo">
+      
+  <img src="../../../assets/nd_white_alpha.png" alt="logo">
+
+    </a>
+    Nelson Defoulny
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tags/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tag Index
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Professional Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Professional Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/bn_virtual_production/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Virtual Production
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/bn_msg_sphere_projection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MSG Sphere Projection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/bn_pavillon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pavillon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/mm_pirata_et_capitano/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Pirata Et Capitano Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/mm_ue_animation_pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE Animation Pipeline
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/mm_motion_capture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Motion Capture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/sw_smart_mirror/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Smart Mirror
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/sw_expert_road_safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Expert Road Safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../professional_projects/mz_kalulu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Kalulu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Personal Projects
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Personal Projects
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE5 Wire Mesh Tool Plugin
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE5 Wire Mesh Tool Plugin
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Demo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gallery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Gallery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wire-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Wire Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thickness-and-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Thickness and Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uniform-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Uniform Joints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uvs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#preview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Preview
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it Works
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="How it Works">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#base-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Base Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convex-hull" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Convex Hull
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#uvs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pros-and-cons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pros and Cons
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Lessons
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Lessons
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lessons/raymarching_introduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE Ray Marching Introduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lessons/raymarching_lava_lamp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE Ray Marching Lava Lamp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../lessons/material_hlsl/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UE HLSL in Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+<div class="post-header">
+
+  <!-- <p><strong>Title:</strong> UE5 Wire Mesh Tool Plugin</p> -->
+  <!-- <p><strong>UE5 Wire Mesh Tool Plugin</strong></p> -->
+
+  <!-- 
+    <p><strong>Description:</strong> Modeling tool that generate wireframe version of a given mesh</p>
+   -->
+
+  
+    <div class="box"><p><strong>Author:</strong> Nelson Defoulny</p></div>
+  
+
+  
+    <div class="box"><p><strong>Category:</strong> Personal Projects</p></div>
+  
+
+  
+
+</div>
+
+
+
+<div class="post-header">
+
+  
+    <div class="box"><p><strong>Date:</strong> 2025</p></div>
+  
+
+  
+
+  
+
+  
+
+  
+    <div class="box"><p><strong>Development Team Size:</strong> 1</p></div>
+  
+
+</div>
+
+
+
+  
+
+
+  <nav class="md-tags" >
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:c" class="md-tag">C++</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:git" class="md-tag">Git</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:math" class="md-tag">Math</a>
+      
+    
+      
+      
+      
+      
+        <a href="../../../tags/#tag:unreal-engine-5" class="md-tag">Unreal Engine 5</a>
+      
+    
+  </nav>
+
+
+
+
+
+  <h1>UE5 Wire Mesh Tool Plugin</h1>
+  <!-- <img src="https://nelsondefoulny.github.io/assets/ue_icon_black.png" alt="Unreal Engine" width="32" height="32" /> -->
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+<img src="/assets/wiremesh/cube_00.png" width="256"/>
+<img src="/assets/wiremesh/cube_01.png" width="256"/>
+<img src="/assets/wiremesh/cube_02.png" width="256"/>
+<img src="/assets/wiremesh/cube_05.png" width="256"/>
+
+</div>
+
+<h2 id="description">Description</h2>
+<p>The Wire Mesh Tool is a plugin for Unreal Engine 5 that extends the editor modeling toolset. Its purpose is to transform any 3D model into a volumetric wireframe mesh. Instead of relying on simple wireframe rendering, it generates real geometry by replacing every edge of the source mesh with a solid 3D wire.</p>
+<p>This approach opens up creative possibilities for:<br />
+- Stylized visuals: achieve a clean, technical, or futuristic wireframe look.<br />
+- Visualization: highlight the structure of complex models.<br />
+- Gameplay &amp; VFX: build holograms, energy grids, sci-fi cages, or unique interactive objects.</p>
+<p>Unlike traditional shader-based wireframes, the generated mesh can:<br />
+- Cast and receive shadows<br />
+- Interact with lights and materials<br />
+- Participate in physics and collisions</p>
+<p>Whether for artistic expression, technical previews, or gameplay effects, the Wire Mesh Plugin offers a simple way to turn ordinary models into striking geometric designs.</p>
+<h2 id="demo">Demo</h2>
+<video width="1080" controls>
+  <source src="/assets/wiremesh/demo.mov" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<h2 id="gallery">Gallery</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+<img src="/assets/wiremesh/chair_00.png" width="320"/>
+<img src="/assets/wiremesh/chair_01.png" width="320"/>
+<img src="/assets/wiremesh/chair_02.png" width="320"/>
+<img src="/assets/wiremesh/chair_03.png" width="320"/>
+<img src="/assets/wiremesh/chair_04.png" width="320"/>
+
+</div>
+
+<h2 id="features">Features</h2>
+<h3 id="wire-selection">Wire Selection</h3>
+<p>Use all edges or only polygroup borders as wire sources.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+<img src="/assets/wiremesh/cube_06.png" width="320"/>
+<img src="/assets/wiremesh/cube_01.png" width="320"/>
+<img src="/assets/wiremesh/cube_02.png" width="320"/>
+
+</div>
+
+<h3 id="thickness-and-resolution">Thickness and Resolution</h3>
+<p>Full control is given over wire thickness and the number of segments per revolution.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+<img src="/assets/wiremesh/cube_05.png" width="320"/>
+
+</div>
+
+<h3 id="uniform-joints">Uniform Joints</h3>
+<p>The tool supports "uniform" and "smallest" joints. The preferred method is "smallest" as it limits the size of the joints, which is especially important when the mesh has acute angles. Otherwise, the uniform option can be used to increase consistency.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/non_uniform.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest Joint
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/uniform.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Joint
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cube_non_uniform.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Cube with Smallest Joints
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cube_uniform.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Cube with Uniform Joints 
+    </figcaption>
+  </figure>
+
+</div>
+
+<h3 id="attributes">Attributes</h3>
+<p>The tool supports most mesh attributes including:<br />
+- Polygroups: Each individual element has its own polygroup ID. This can be helpful for further mesh modification and to generate UVs.<br />
+- Vertex Colors: One color for joints and one color for wires.<br />
+- Normals and Tangents: The tool computes normals and tangents by default.<br />
+- Materials: One or two material IDs (split joints and wires).</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/attrib_polygroups.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Polygroups
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/attrib_vertex_color.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Vertex Colors
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/attrib_normal_tangent.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Tangents/Normals
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/attrib_material1.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      One Material
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/attrib_material2.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Two Materials
+    </figcaption>
+  </figure>
+
+</div>
+
+<h3 id="uvs">UVs</h3>
+<p>The tool also computes UVs automatically. Each element (wire/joint) is mapped to a UV island and normalized in range. The tool can optionally arrange elements along a grid.</p>
+<p>Thanks to polygroups and default UVs, it is fairly easy to recompute or unwrap UVs using other Unreal Engine tools.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/uv_01.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Joint UV
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/uv_02.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Vertex Colors
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 960px; margin: 0;">
+    <img src="/assets/wiremesh/uv_03.png" width="960" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      UV Grid Dispatch
+    </figcaption>
+  </figure>
+
+</div>
+
+<h3 id="preview">Preview</h3>
+<p>The tool supports some preview options including:<br />
+- Show/Hide source mesh<br />
+- Show/Hide wireframe<br />
+- Preview modes (output, flat, grey, transparent, attributes, checkerboard)</p>
+<!--
+
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_output.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Output
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_flat_shadding.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Flat Shadding
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_grey.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Grey
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_transparent.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Transparent
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_normal.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Tangent Normal
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_vertex_color.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Vertex Color
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_polygroups.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Polygroups
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/preview_checkerboard.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Checkerboard
+    </figcaption>
+  </figure>
+
+</div>
+
+-->
+
+<h2 id="how-it-works">How it Works</h2>
+<p>This part exposes the underlying concepts I used to make the tool and is therefore more technical.</p>
+<h3 id="base-concept">Base Concept</h3>
+<p>The main idea is to leverage convex hulls to join cylinders. This is a fairly simple approach and yet it works pretty well in a lot of cases. There are some important caveats that we will discuss later.</p>
+<p>For the rest of the post I will use the following terms:<br />
+- Joint: this is the node between cylinders that is constructed from a convex hull<br />
+- Wire: this is just one cylinder<br />
+- Anchor: this is one circle, one open cap of a wire. Therefore, there are two anchors per wire.</p>
+<h3 id="convex-hull">Convex Hull</h3>
+<p>Before going in depth, it is important to explain why this approach works. Indeed, the whole concept assumes that a bunch of anchors (circles) can belong to a single convex hull. If this hypothesis isn't verified, then some anchor points won't exist in the final joint and it will be impossible to create the associated wire.</p>
+<p>Let's start by considering two finite cylinders of radius $ r $ that start at joint location $ P $. Then we can space them out (along their axis) by a distance $ d $ so they don't overlap.</p>
+<figure>
+<p><img alt="" src="../../../assets/wiremesh/math_pair_distance.png" width="1280" /></p>
+<figcaption>
+<p>Figure 1 : Wire Pair Distance</p>
+</figcaption>
+</figure>
+<p>Using simple trigonometry (see fig 1) we can find $ d $, which is enough to place:</p>
+<div class="arithmatex">\[
+\begin{aligned}
+I &amp;= P + d \hat u \\ 
+J &amp;= P + d \hat v
+\end{aligned}
+\]</div>
+<p>To place anchor points, we can sample a circle in any orthonormal basis respectively made from $ \hat u $ and $ \hat v $. </p>
+<div class="arithmatex">\[ 
+I_α = P + d \, \hat u + r \, cos(α) \, \hat u_1 + r \, sin(α) \, \hat u_2 \\
+J_α = P + d \, \hat v + r \, cos(α) \, \hat v_1 + r \, sin(α) \, \hat v_2 
+\]</div>
+<p>However, this solution only works for two cylinders and adding more wires only works for specific configurations. Let's inspect what we have if we consider a problematic setup with 3 wires. </p>
+<figure>
+<p><img alt="" src="../../../assets/wiremesh/math_hull.png" width="1280" /></p>
+<figcaption>
+<p>Figure 2 : Convex Hull</p>
+</figcaption>
+</figure>
+<p>Using wire pair distance (see fig 1) gives $ d1 $ from the $ IJ $ pair and $ d3 $ from the $ JK $ pair (see fig 2). The green dot area shows the resulting convex hull. As we can see, $ P_{IJ} $ won't be part of it, therefore excluding wire $ \overrightarrow{PI} $ from the solution.</p>
+<p>A more general way of saying this is that anchors at higher distances can surround points from closer anchors, removing them from the convex hull.</p>
+<h4 id="uniform-convex-hull">Uniform Convex Hull</h4>
+<p>The uniform convex hull solution is fairly simple and intuitive and is represented in red (see fig 2). </p>
+<p>The idea is to use the highest pairwise distance to create our convex hull. </p>
+<div class="arithmatex">\[ 
+d = \max_{i,j \in W, \; i \neq j} d_{ij}
+\]</div>
+<p>Doing so means that all created anchor points will belong to a sphere of radius : </p>
+<div class="arithmatex">\[
+r_s = \sqrt{d² + r²}
+\]</div>
+<p>As part of the same sphere, all anchor points subsequently belong to the same convex hull.</p>
+<p>As we can see, the uniform hull contains all anchor points $ P_{I3}, P_{I3}', P_{J3}, P_{JK}, P_{K3} $. However, it is clearly overshooting the problem for $ P_{I3} $ and $ P_{I3}' $, and we can do better.</p>
+<h4 id="smallest-convex-hull">Smallest Convex Hull</h4>
+<p>Let's examine the smallest convex hull solution represented in orange (see fig 2).</p>
+<p>Compared to the uniform hull, we can get a better solution for $ P_{I3} $ and $ P_{I3}' $ by projecting $ P_{J3} $ on $ (PI) $. To do so, we simply need to compute $ \overrightarrow{PP_{J3}} $ :</p>
+<div class="arithmatex">\[
+\begin{aligned}
+\text{with :}&amp;\quad \hat u = \frac{\overrightarrow{PI}}{\left\Vert\overrightarrow{PI}\right\Vert}, \quad
+\hat v = \frac{\overrightarrow{PJ}}{\left\Vert\overrightarrow{PJ}\right\Vert} \\\\
+\frac{\overrightarrow{J_3P_{J3}}}{\left\Vert\overrightarrow{J_3P_{J3}}\right\Vert} &amp;= \hat{u}_{\perp v} = \frac{\hat u - (\hat u \cdot \hat v)\,\hat v}{\lVert \hat u - (\hat u \cdot \hat v)\,\hat v \rVert} \quad 
+\text{(u orthogonalized to v)} \\\\
+\overrightarrow{PP_{J3}} &amp;= d_3 \, \hat v + r \, \hat{u}_{\perp v} \\\\
+\text{Proj}_{\hat u}(\overrightarrow{PP_{J3}}) &amp;= (\overrightarrow{PP_{J3}} \cdot \hat u) \, \hat u \\\\
+d_2 &amp;= \left\Vert\text{Proj}_{\hat u}(\overrightarrow{PP_{J3}})\right\Vert
+\end{aligned}
+\]</div>
+<p>To get $ d_2 $, we need to repeat the above computation for all other anchors that have higher distances. In general terms, this means that the distance $ d_i $ of an anchor $ i $ is the maximum of all $ d_{ij} $ for every anchor $ j $ that verifies $ d_j &gt; d_i $.</p>
+<p>This statement has multiple important consequences for the implementation. First, as we only care about higher distance anchors, we can skip the most distant one that won't change and process other anchors in descending order. Managing the descending order requires extra care as we need to reconsider shorter anchors every time we change an anchor distance. Therefore, we need to maintain the order and the processing cursor as the values change.</p>
+<h3 id="implementation">Implementation</h3>
+<p>In the following sections, we will start looking at the results of the implementation for the corner of a cube.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_00.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Figure 3 : Joint Study
+    </figcaption>
+  </figure>
+
+</div>
+
+<h4 id="convex-hull_1">Convex Hull</h4>
+<p>Here are the results from the Uniform and Smallest convex hull techniques.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_01.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Convex Hull
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_02.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Convex Hull with Colored Anchors
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_04.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest Convex Hull with Colored Anchors
+    </figcaption>
+  </figure>
+
+</div>
+
+<h4 id="removing-anchor-faces">Removing Anchor Faces</h4>
+<p>The next step is really straightforward. We need to remove the triangles on anchor faces to avoid creating non-manifold geometry with the wires.</p>
+<p>There are two easy methods for this that depend on the implementation:<br />
+1. Remove all triangles which have their 3 vertices belonging to the same anchor.<br />
+2. Add a temporary vertex at the center of each anchor face, remove all triangles that use it, and clean it up.</p>
+<p>As you might have guessed from previous results, I am using the first method in this tool.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/hull_02.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Hull with Colored Anchors
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/hull_03.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Hull without Anchor Faces
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/hull_04.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest Hull with Colored Anchors
+    </figcaption>
+  </figure>
+
+   <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/hull_05.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest Hull without Anchor Faces
+    </figcaption>
+  </figure>
+
+</div>
+
+<h4 id="adding-wires">Adding Wires</h4>
+<p>The next step is to add wires to our mesh. Wires are just cylinders, and we already have their caps (anchors), so it only requires using anchor vertex indices properly.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_06.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform Joint
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_07.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest Joint
+    </figcaption>
+  </figure>
+
+</div>
+
+<h4 id="rounding-convex-hull">Rounding Convex Hull</h4>
+<p>If we now look at the other side of this cube corner, we can see that for a corner like this one, we have a pretty bad result.</p>
+<p>To fix this, we can simply add one additional vertex on the opposite side of each anchor face center. These additional vertices might end up in the convex hull, so the implementation has to handle them accordingly.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_08.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Joint Study
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_09.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Joint using Uniform Convex Hull
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/hull_10.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Joint using Smallest Convex Hull
+    </figcaption>
+  </figure>
+
+</div>
+
+<h4 id="joint-examples">Joint Examples</h4>
+<p>Comparison of hull methods for an acute angle.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/uniform.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Uniform
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/non_uniform.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Smallest
+    </figcaption>
+  </figure>
+
+</div>
+
+<p>Joint at the base of a cylinder.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cylinder_00.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Wired Cylinder
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cylinder_base_02.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Zoom on Cylinder Base
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cylinder_base_00.png" width="256" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Cylinder Base Hull
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 256px; margin: 0;">
+    <img src="/assets/wiremesh/cylinder_base_01.png" width="256" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Cylinder Base Hull without Anchor Faces
+    </figcaption>
+  </figure>
+
+</div>
+
+<h3 id="uvs_1">UVs</h3>
+<p>The tool also unwraps UVs. There are many different approaches, but for this tool I decided to stick to an easy method. The main idea is that AutoUV tools available can do the job for artistic purposes. Therefore, the default UVs have been thought for technical purposes where deterministic UVs could be a huge thing.</p>
+<p>The wires are simply opened and laid out in UV range, so it is a simple conversion from indices to UV coordinates.</p>
+<p>I wanted to get one UV island per joint. Therefore, I am using the Tutte Embedding technique with uniform weight. The main idea of this technique is to map one of the anchor faces to a unit disk in UV space. Then it folds all other triangles inside this disk. Finally, there is a relaxation algorithm to spread UV points.   </p>
+<p>By default, each joint/wire is mapped to the full (0-1) range. Optionally, they can be laid out along a grid.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/uv_01.png" width="320" alt="Wire Mesh Example 1"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Joint UV
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/uv_02.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      Wire UV
+    </figcaption>
+  </figure>
+
+  <figure style="text-align: center; max-width: 320px; margin: 0;">
+    <img src="/assets/wiremesh/uv_04.png" width="320" alt="Wire Mesh Example 2"/>
+    <figcaption style="margin-top: 8px; font-size: 14px; color: #666;">
+      UV Grid Layout
+    </figcaption>
+  </figure>
+
+</div>
+
+<h3 id="attributes_1">Attributes</h3>
+<p>Each joint/wire has its own polygroup. This is mainly here to help modify the mesh with other modeling tools. It also plays a critical role in the behavior of Unreal Engine AutoUV tools.</p>
+<p>It also assigns one vertex color for joints and another for wires, which can be helpful for material creation.</p>
+<p>The tool also computes normals and tangents of the resulting mesh.</p>
+<h3 id="pros-and-cons">Pros and Cons</h3>
+<p>The convex hull strategy has a critical issue: it is really fragile to acute angles. As the angle gets smaller, the anchor distances grow rapidly. Therefore, joint size grows rapidly as well, which doesn't work visually and technically.</p>
+<p>Nonetheless, the "smallest hull" strategy works on a wider range of mesh topology than the uniform hull and is a decently good solution. The uniform version has been kept as it is visually interesting for some topology.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" hidden>
+        
+          
+          <a href="../../professional_projects/mz_kalulu/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Kalulu">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Kalulu
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../lessons/raymarching_introduction/" class="md-footer__link md-footer__link--next" aria-label="Next: UE Ray Marching Introduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                UE Ray Marching Introduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 Nelson Defoulny. Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+
+<div class="md-footer-ue">
+  <span>Powered by</span>
+  <img class="ue-logo" src="/assets/ue_logo_horizontal_white.svg" alt="Unreal Engine" />
+</div>
+
+
+
+
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/in/ndefoulny" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zM102.2 96a38.5 38.5 0 1 1 0 77 38.5 38.5 0 1 1 0-77m282.1 320h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.instant", "navigation.tracking", "navigation.footer", "navigation.indexes", "toc.follow", "toc.integrate", "search.suggest", "search.highlight", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../../../javascripts/katex.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/katex.min.js"></script>
+      
+        <script src="https://unpkg.com/katex@0/dist/contrib/auto-render.min.js"></script>
+      
+    
+  </body>
+</html>

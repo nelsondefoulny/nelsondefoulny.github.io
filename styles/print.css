@@ -1,0 +1,117 @@
+@media print {
+  /* === GENERAL RESET === */
+  /* html, body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  } */
+
+  html, body {
+    margin: 0;
+  }
+
+  /* === PAGE SETUP === */
+  @page {
+    size: A4;
+    margin: 1cm; 
+  }
+
+  body {
+    counter-reset: page;
+  }
+
+  /* === HIDE NON-CONTENT ELEMENTS === */
+  .md-header,
+  .md-footer,
+  .md-sidebar,
+  nav,
+  .md-nav,
+  .md-content__button,
+  .md-source-file,
+  .md-content__inner > .md-typeset > .toc {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+  }
+
+  /* === PAGE BREAK BEFORE TITLES === */
+  /* h1, h2 {
+    page-break-before: always;
+  } */
+
+  h2, h3, h4, h5 {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+    orphans: 3;
+    widows: 3;
+    margin-top: 1em;
+  }
+  
+  h2 + *, h3 + *, h4 + *, h5 + * {
+    page-break-inside: avoid;
+  }
+
+  /* === AVOID PAGE BREAK IN KEY BLOCKS === */
+  pre,
+  code,
+  blockquote,
+  table,
+  img,
+  .admonition {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* === ENABLE CODE WRAPPING === */
+  pre, code {
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow-wrap: anywhere !important;
+  }
+
+  /* === OPTIONAL FOOTER: AUTHOR + PAGE NUMBERS === */
+  body::after {
+    content: "© 2025 Defoulny Nelson · Page " counter(page) " / " counter(pages);
+    display: block;
+    position: fixed;
+    bottom: 0cm;
+    left: 0cm;
+    right: 0cm;
+    text-align: right;
+    font-size: 8pt;
+    color: #888;
+  }
+
+  /* === OPTIONAL STYLES === */
+  /* Print hrefs only for external links, not code anchors */
+  /* a[href^="http"]:not([href*="#__codelineno"])::after {
+    content: " (" attr(href) ")";
+    font-size: 80%;
+  } */
+  /* or disable hrefs */
+  a::after {
+    content: none !important;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Improve contrast for dark theme exports (optional) */
+  /* html[data-md-color-scheme="slate"] {
+    background-color: #121212 !important;
+    color: #f0f0f0 !important;
+  } */
+
+  /* html[data-md-color-scheme="slate"] pre,
+  html[data-md-color-scheme="slate"] code {
+    background: #1e1e1e !important;
+    color: #ccc !important;
+  } */
+}

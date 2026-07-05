@@ -1,0 +1,17 @@
+.md-footer-ue {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: left; */
+  align-items: left;
+  /* font-size: 3em; */
+  color: #a8a8a8;
+  padding-top: 1em;
+  gap: 0.8em;
+}
+
+.md-footer-ue .ue-logo {
+  height: 1.5em;
+  filter: brightness(0.65);
+  /* vertical-align: middle; */
+  /* display: inline-block; */
+}
